@@ -1,0 +1,78 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      #base64 {
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>PDF转base64</h1>
+      <input id="inputFile" type="file" onchange="convertToBase64();" />
+    </div>
+   
+    <div>
+      <h1>上传PDF转base64为</h1>
+      <div id="base64"></div>
+    </div>
+    <div>
+      <button onclick="viewPdf()">Base64转PDF下载</button>
+      <button onclick="viewPdf('preview')">PDFJS---Base64转PDF预览</button>
+    </div>
+    <script type="text/javascript">
+        function convertToBase64() {
+            var selectedFile = document.getElementById("inputFile").files;
+            if (selectedFile.length > 0) {
+                var fileToLoad = selectedFile[0];
+                var fileReader = new FileReader();
+                var base64;
+                fileReader.onload = function(fileLoadedEvent) {
+                    base64 = fileLoadedEvent.target.result;
+                    console.log(base64);
+                    document.getElementById('base64').innerText = base64
+                };
+                fileReader.readAsDataURL(fileToLoad);
+            }
+        }
+        function viewPdf (type) {
+          var prefix = 'data:application/pdf;base64,'
+          var content = document.getElementById('base64').innerText
+          // 去除base64头部
+          content = content.replace(new RegExp(prefix), "")
+          console.log(content)
+          if (!content) {
+            console.log(content)
+            return
+          }
+          const blob = this.base64ToBlob(content)
+          debugger
+          if (type === 'preview') {
+            const fileURL = URL.createObjectURL(blob)
+            window.open(`./pdfjs/web/viewer.html??file=${fileURL}`)
+            return
+          }
+          if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+            window.navigator.msSaveOrOpenBlob(blob)
+          } else {
+            const fileURL = URL.createObjectURL(blob)
+            window.open(fileURL)
+          }
+        }
+        function base64ToBlob (code) {
+          code = code.replace(/[\n\r]/g, '')
+          const raw = window.atob(code)
+          const rawLength = raw.length
+          const uInt8Array = new Uint8Array(rawLength)
+          for (let i = 0; i < rawLength; ++i) {
+            uInt8Array[i] = raw.charCodeAt(i)
+          }
+          return new Blob([uInt8Array], { type: 'application/pdf' })
+        }
+    </script>
+  </body>
+</html>
