@@ -1,0 +1,41 @@
+<html>
+    <head>
+    </head>
+    <div id='msg'></div>
+    <body>
+        <div >page1</div>
+        <iframe src="http://127.0.0.1:8080/index4.html" frameborder="1" id="Bframe"></iframe>
+        <button id='btn'>打开新窗口交换数据</button>
+        <button id='btn1'>发送数据</button>
+        <button id='btn2'>iframe发送数据</button>
+        <button id='btn21'>local</button>
+        <button id='btn3'>跨域发送数据</button>
+        <button id='btn4'>跨域打开新窗口交换数据</button>
+        <script>
+          var newW
+          var newW1
+            btn.onclick=function(){
+                newW=window.open('http://127.0.0.1:8080/index3.html')
+            }
+            btn1.onclick=()=>{
+                newW.postMessage(`page1${Math.random(100)}`,'http://127.0.0.1:8080')
+            }
+            btn2.onclick=()=>{
+              let frame = window.frames[0]
+                frame.postMessage(`page2${Math.random(100)}`, "http://127.0.0.1:8080")
+            }
+            btn21.onclick=()=>{
+              window.localStorage.setItem('a', `page2${Math.random(100)}`)
+            }
+            btn3.onclick=()=>{
+              newW1.postMessage(`page1${Math.random(100)}`,'http://127.0.0.1:8081')
+            }
+            btn4.onclick=function(){
+              newW1=window.open('http://127.0.0.1:8081/index3.html')
+            }
+            window.onload = () => {
+  
+ }
+        </script>
+    </body>
+</html>

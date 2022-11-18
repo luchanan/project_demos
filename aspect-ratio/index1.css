@@ -1,0 +1,50 @@
+/*
+  设计稿：1440px
+  稿中某个设计宽高为： 100*150px
+  计算方式：x/1440 * 100vw
+  100/1440 * 100 = 6.9444vw;
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+section {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: pink;
+}
+aside {
+  width: 6.9444vw;
+  background-color: red;
+  height: 100%;
+}
+main {
+  flex: 1;
+  height: 100%;
+  background-color: bisque;
+}
+.design {
+  width: 6.9444vw;
+  height: 10.4167vw;
+  background-color: aqua;
+}
+.design1 {
+  display: flex;
+}
+.design1 > div {
+  width: 31.3889vw;
+}
+.design1 > div  > div{
+    padding-top: 37.389380530973454%; /* 高/宽 * 100= 169/452 *100 */
+    position: relative;
+    background-color: brown;
+    
+}
+.design1 > div  > div > div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}

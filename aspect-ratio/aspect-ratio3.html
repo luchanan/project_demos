@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>大屏可视化适配方法, 容器宽高比与flex布局收缩伸展结合, 容器上下分层适配, shang</title>
+    <style>
+        /*
+  设计稿：1440px
+  稿中某个设计宽高为： 100*150px
+  计算方式：x/1440 * 100vw
+  100/1440 * 100 = 6.9444vw;
+*/
+* {
+  margin: 0;
+  padding: 0;
+}
+section {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  background-color: pink;
+}
+aside {
+  width: 6.9444vw;
+  background-color: red;
+  height: 100%;
+}
+main {
+  flex: 1;
+  height: 100%;
+  background-color: bisque;
+}
+.design {
+  width: 6.9444vw;
+  height: 10.4167vw;
+  background-color: aqua;
+}
+.design1 {
+  display: flex;
+}
+.design1 .wrapper {
+  position: relative;
+  width: 31.3889vw;
+  flex-grow: 1;
+  background: transparent url(./bg.png) no-repeat top center/cover;
+}
+.design1 .wrapper::before {
+  display: block;
+    content: '';
+    padding-top: 37.389380530973454%; /* 高/宽 * 100= 169/452 *100 */
+}
+.design1 .wrapper .flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.design1 .wrapper > .inner, .design1 .title .inner1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.design1 .title {
+  position: relative;
+  width: 100%;
+}
+.design1 .title::before {
+  display: block;
+    content: '';
+    padding-top: 11.725663716814159%; /* 高/宽 * 100= 53/452 *100 */
+}
+.design1 .content {
+  flex-grow: 1;
+}
+
+    </style>
+  </head>
+  <body>
+    <section>
+        <aside id="menu">
+          <span id="span1">收缩菜单</span>
+        </aside>
+        <main>
+          <span id="span2">展开菜单</span>
+            <div class="design">设计稿元素469*169</div>
+            <div class="design1">
+              <div class="wrapper">
+                <div class="inner">
+                  <div class="flex">
+                    <div class="title"><div class="inner1">469*53</div></div>
+                    <div class="content">
+                      <div>469*116</div>
+                    </div>
+                  </div>
+              </div>
+              </div>
+              <div class="wrapper">
+                <div class="inner">
+                  <div class="flex">
+                    <div class="title"><div class="inner1">469*53</div></div>
+                    <div class="content">
+                      <div>469*116</div>
+                    </div>
+                  </div>
+              </div>
+              </div>
+              <div class="wrapper">
+                <div class="inner">
+                  <div class="flex">
+                    <div class="title"><div class="inner1">469*53</div></div>
+                    <div class="content">
+                      <div>469*116</div>
+                    </div>
+                  </div>
+              </div>
+              </div>
+              </div>
+            </div>
+        </main>
+    </section>
+    <script>
+      document.getElementById('span1').onclick = function () {
+        document.getElementById('menu').style.display = 'none'
+      }
+      document.getElementById('span2').onclick = function () {
+        document.getElementById('menu').style.display = 'block'
+        
+      }
+    </script>
+  </body>
+</html>

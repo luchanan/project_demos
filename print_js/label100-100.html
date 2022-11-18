@@ -1,0 +1,154 @@
+<html>
+  <head>
+    <title>Print.js Custom Style</title>
+    <meta charset="UTF-8" />
+    <script src="./print.min.js"></script>
+    <script src="./JsBarcode.all.min.js"></script>
+    <style>
+          body {
+        margin: 0;
+        padding: 0;
+        background-color: #FAFAFA;
+        font: 12pt "Tahoma";
+    }
+    * {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+    .page {
+        width:100mm;
+        min-height: 100mm;
+        margin: 0;
+    }
+    .subpage {
+        height: 100mm;
+    }
+    
+    
+    </style>
+  </head>
+  <div id="book">
+    <div class="page">
+        <div class="subpage">
+            <div>测试库位</div>
+            <svg class="barcode"></svg>
+            </div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <!-- <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div>
+    <div class="page">
+        <div class="subpage"><div>测试库位</div>
+        <svg class="barcode"></svg></div>    
+    </div> -->
+</div>
+  <body>
+<script>
+ JsBarcode(".barcode", "FJ-A-1-12", {
+    displayValue: true
+  });
+  JsBarcode(".barcode", "FJ-A-1-12", {
+    displayValue: true
+  });
+  JsBarcode(".barcode", "FJ-A-1-12", {
+    displayValue: true
+  });
+// window.print();
+printJS({
+    printable: "book",
+    type: "html",
+    scanStyles: false,
+    // targetStyles: ['*'], // very import
+    style:
+      `
+      @page {
+        size: 100mm 100mm;
+        margin: 0;
+    }
+    @media print {
+        html, body {
+            width: 100mm;
+            height: 100mm;        
+        }
+        .page {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: 100mm;
+            min-height: 100mm;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
+        }
+    }
+      `,
+    font_size: ""
+  });
+</script>
+  </body>
+</html>

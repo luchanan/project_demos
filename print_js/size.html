@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <title>Print.js Custom Style</title>
+    <meta charset="UTF-8" />
+    <script src="./print.min.js"></script>
+    <style>
+      #app {
+        background: red;width:100mm;height:100mm;font-size:18px;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>Print.js Custom Style</h1>
+      <p>Print test...</p>
+      <p class="heavy">Print test bold...</p>
+      <div><button id="test-button">Print</button></div>
+    </div>
+<script>
+    function printTest() {
+  printJS({
+    printable: "app",
+    type: "html",
+    targetStyles: ['*'], // very import
+    style:
+      `@media print { @page {size: 100mm 100mm;margin:0mm;}html,body {margin: 0;}#app{page-break-after:auto;background: red;font-size:18px;}h1{font-size:48px}}`,
+    font_size: ""
+  });
+}
+function doPrint() { 
+        var style = document.createElement('style');
+        //portrait 纵向 landscape横向
+        style.innerHTML = "@media print { @page {size:100mm 100mm!important; margin: 0;padding: 0;margin-top:8.2mm;margin-left:10.05mm;margin-right:5.05mm;margin-bottom:0mm;} .noprint { display: none;}h1 {font-size:22px}}";
+        window.document.head.appendChild(style);
+        window.print();
+      }
+document.getElementById("test-button").addEventListener("click", printTest);
+</script>
+  </body>
+</html>

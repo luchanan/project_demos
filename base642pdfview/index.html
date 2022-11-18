@@ -12,7 +12,7 @@
   </head>
   <body>
     <div>
-      <h1>PDF转base64</h1>
+      <h1>PDF转base64, 请创建一个server来测试DEMO</h1>
       <input id="inputFile" type="file" onchange="convertToBase64();" />
     </div>
    
@@ -22,9 +22,14 @@
     </div>
     <div>
       <button onclick="viewPdf()">Base64转PDF下载</button>
+      <button onclick="replaceBase()">替换base44前缀</button>
+      <button onclick="replacePlus()">替换base44 + -</button>
       <button onclick="viewPdf('preview')">PDFJS---Base64转PDF预览</button>
+      <button onclick="viewPdf('iframe')">PDFJS---Base64转PDF IFRAME预览</button>
+      <iframe id="iframe"></iframe>
     </div>
     <script type="text/javascript">
+        var newT = null
         function convertToBase64() {
             var selectedFile = document.getElementById("inputFile").files;
             if (selectedFile.length > 0) {
@@ -39,21 +44,47 @@
                 fileReader.readAsDataURL(fileToLoad);
             }
         }
-        function viewPdf (type) {
+        function replaceBase () {
           var prefix = 'data:application/pdf;base64,'
           var content = document.getElementById('base64').innerText
           // 去除base64头部
           content = content.replace(new RegExp(prefix), "")
+          document.getElementById('base64').innerText = content
+        }
+        function replacePlus () {
+          // 数据库不能存+ /, 所以存的时候转义为+ -> -, / -> _如果后端不处理，前端就需要处理一下， 在转义回去
+          var content = document.getElementById('base64').innerText
+          content = content.replace(/-/g, '+')
+          content = content.replace(/_/g, '/')
+          // 去除base64头部
+          document.getElementById('base64').innerText = content
+        }
+        function viewPdf (type) {
+          // 防止chrome拦截弹窗, 先打开一个空
+          if (type !== 'iframe') {
+            newT = window.open()
+          }
+          
+          var prefix = 'data:application/pdf;base64,'
+          var content = document.getElementById('base64').innerText
+          // 去除base64头部
+          content = content.replace(new RegExp(prefix), "")
+          
           console.log(content)
           if (!content) {
             console.log(content)
             return
           }
           const blob = this.base64ToBlob(content)
-          debugger
           if (type === 'preview') {
             const fileURL = URL.createObjectURL(blob)
-            window.open(`./pdfjs/web/viewer.html??file=${fileURL}`)
+            // 被拦截
+            // window.open(`./pdfjs/web/viewer.html?file=${fileURL}`)
+            newT.location.href = `./pdfjs/web/viewer.html?file=${fileURL}`
+            return
+          } else if (type === 'iframe') {
+            const fileURL = URL.createObjectURL(blob)
+            document.getElementById('iframe').setAttribute('src', `./pdfjs/web/viewer.html?file=${fileURL}`)
             return
           }
           if (window.navigator && window.navigator.msSaveOrOpenBlob) {

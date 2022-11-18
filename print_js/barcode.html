@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Print.js Custom Style</title>
+    <meta charset="UTF-8" />
+    <script src="./print.min.js"></script>
+    <script src="./JsBarcode.all.min.js"></script>
+    <style>
+      #app {
+        width:100mm;
+        height:100mm;
+        
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .flex {
+        display: flex;
+      }
+      .warpper {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <svg id="barcode"></svg>
+      <div calss="warpper">
+        <div class="flex">
+          <div>订单号:</div>
+          <div>123456789</div>
+        </div>
+      </div>
+    </div>
+<script>
+  JsBarcode("#barcode", "catt1212", {
+    width:4,
+    height:40,
+    displayValue: false
+  });
+  printJS({
+    printable: "app",
+    type: "html",
+    targetStyles: ['*'], // very import
+    style:
+      `@media print { @page {size: 98mm 98mm;margin:2mm;}html,body {margin: 0;background-color: blue;}}`,
+    font_size: ""
+  });
+document.getElementById("test-button").addEventListener("click", printTest);
+</script>
+  </body>
+</html>
